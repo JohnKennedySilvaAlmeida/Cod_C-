@@ -1,0 +1,147 @@
+1 - Criar um arquivo com conteúdo
+
+Crie um arquivo com nome 'exercicio.txt' dentro do diretório ‘/home/exercicio/’ com o seguinte conteúdo:
+
+#include <iostream>
+#include <string>
+#include <fstream>
+using namespace std;
+
+int main(int argc, char *argv[])
+{
+	string t1 = "teste , arros , lula, brasil, temer , fui, cod\n";
+	string t2 = "codigo\n";
+	string t3 = "sc\n";
+  string t4 = "renata\n";
+  string t5 = "baba\n";   // strings para o arquivo // formas d fazer ... <<  {}  ()  OBS !!
+	
+	
+	ofstream out("exercicio.txt");
+	out << t1;
+	out << t2;
+	out << t3;      // inserindo txt             // cc     obs!!  c++ 
+  out << t4;
+  out << t5;
+	out.close();
+	
+	return 0;
+}
+
+
+--------------------------------------------------
+2 - Copiar o conteúdo de um arquivo com algumas exceções
+
+Copie o conteúdo do arquivo 'exercício.txt', com exceção das linhas que começarem com 'Teste' para o arquivo /home/exercicio/novo.txt.
+
+Dica: 
+leia sobre o find e string::npos.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(){
+  FILE *novo, *velho;
+  novo=fopen("novo.txt","w");
+  velho=fopen("exercicio.txt","r");
+    
+  if (novo==NULL || velho==NULL){                  //OBS!!! melhorar    >> c !! c++
+    printf("Erro de abertura\n");
+    system("pause");
+    exit(1);
+    }
+  char letra;
+  while( (letra = fgetc(velho)) != EOF ){
+    if(letra =='T')letra='U';
+    fprintf(novo, "%c", letra);
+  }
+  fclose(velho);
+  fclose(novo);
+  return 0;
+}
+
+-------- P2 ------------------------------
+#include <fstream>
+#include <string>
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+int main(){
+
+  string nome;
+  ifstream arquivoLeitura;
+  arquivoLeitura.open("novo.txt");
+    
+  string palavraAtual;
+  string textoParaGravar;
+    
+  while (arquivoLeitura.good()) {
+      
+    getline(arquivoLeitura, palavraAtual);
+    if(!("teste" == palavraAtual.substr(0,5))){
+    textoParaGravar+=palavraAtual+"\n";
+    }
+  }
+    
+  std::cout << textoParaGravar << std::endl; 
+  arquivoLeitura.close();
+  return 0;
+}
+
+
+-------------------------falta-----------------------------------
+
+3 - Verificar se determinado arquivo existe
+
+Testar se um determinado arquivo existe, passando o nome do arquivo por parâmetro em linha de comando, informar na saída do programa ‘Arquivo xxx existe’ ou ‘Arquivo xxx não existe’.
+
+Dica: 
+leia sobre argc e argv.
+---------------------------------------------------------------
+4 - Verificar se determinado diretório existe
+
+Testar se um determinado diretório existe passando o nome do diretório por parâmetro em linha de comando, 
+informar na saída do programa ‘Diretório xxx existe’ ou ‘Diretório xxx não existe’.
+-----------------------------------------------------------------
+5 - Ler um arquivo e imprimir o conteúdo em tela
+
+Abrir um arquivo e imprimir o conteúdo dele na tela. 
+Passar por parâmetro em linha de comando o nome do arquivo e o número de linhas que deseja imprimir.
+
+Dica: 
+leia sobre cout.
+----------------------------------------
+6 - Listar determinadas informações referentes as rotas de rede
+Listar as rotas de rede do servidor usando o comando ‘route -n’. 
+Deverá mostrar como resultado na tela somente os seguintes campos: Destino, Máscara e Interface.
+Dica: 
+leia sobre o find e string::npos e substr e popen.
+
+Utilize a função abaixo:
+
+cod**
+
+vector<string> explode(string separador, string frase) {
+  int prox = separador.size();
+  vector<string> ret;
+  string::size_type ini, fim;
+  ini = fim = 0;
+  while (true) {
+    fim = frase.find(separador, ini);
+    if (fim == string::npos) {
+      ret.push_back(frase.substr(ini, frase.size() - ini));
+      break;
+    }
+    ret.push_back(frase.substr(ini, fim - ini));
+    ini = fim + prox;
+  }
+  return ret;
+}
+
+
+
+
+
+
+
