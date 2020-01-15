@@ -3,30 +3,27 @@
 Crie um arquivo com nome 'exercicio.txt' dentro do diretório ‘/home/exercicio/’ com o seguinte conteúdo:
 
 #include <iostream>
-#include <string>
 #include <fstream>
 using namespace std;
 
-int main(int argc, char *argv[])
-{
-	string t1 = "teste , arros , lula, brasil, temer , fui, cod\n";
-	string t2 = "codigo\n";
-	string t3 = "sc\n";
-  string t4 = "renata\n";
-  string t5 = "baba\n";   // strings para o arquivo // formas d fazer ... <<  {}  ()  OBS !!
-	
-	
-	ofstream out("exercicio.txt");
-	out << t1;
-	out << t2;
-	out << t3;      // inserindo txt             // cc     obs!!  c++ 
-  out << t4;
-  out << t5;
-	out.close();
-	
-	return 0;
+int main () {
+  ofstream myfile ("exercicio.txt");
+  if (myfile.is_open()) {
+    myfile << "teste\n";
+    myfile << "1teste\n";
+    myfile << "brasil\n";
+    myfile << "america\n";
+    myfile << "john\n";
+    myfile << "tete\n";
+    myfile << "2_teste\n";
+    myfile << "abelha\n";
+    myfile << "1_teste\n";
+    myfile << "crase\n";
+    myfile.close();
+  }
+  else cout << "Impossível abrir o ficheiro";
+  return 0;
 }
-
 
 --------------------------------------------------
 2 - Copiar o conteúdo de um arquivo com algumas exceções
