@@ -191,158 +191,198 @@ Deverá mostrar como resultado na tela somente os seguintes campos: Destino, Má
 Dica: 
 leia sobre o find e string::npos e substr e popen.
 
-Utilize a função abaixo:
-
-cod**
-
-vector<string> explode(string separador, string frase) {
-  int prox = separador.size();
-  vector<string> ret;
-  string::size_type ini, fim;
-  ini = fim = 0;
-  while (true) {
-    fim = frase.find(separador, ini);
-    if (fim == string::npos) {
-      ret.push_back(frase.substr(ini, frase.size() - ini));
-      break;
-    }
-    ret.push_back(frase.substr(ini, fim - ini));
-    ini = fim + prox;
-  }
-  return ret;
-}
-
-
-------
-
-/*Listar determinadas informações referentes as rotas de rede
-Listar as rotas de rede do servidor usando o comando ‘route -n’. 
-Deverá mostrar como resultado na tela somente os seguintes campos: Destino, Máscara e Interface.
-
-Dica: 
-leia sobre o find e string::npos e substr e popen.*/
 #include <fstream>
 #include <vector>
-
-#include<stdio.h>
-
+#include<stdio.h>                           // codigo 1  - observar formato
 #include <iostream>
 #include <map>
 #include <iterator>
 
 using namespace std;
 
-vector<string> explode(string separador, string frase) {      // explode 
+vector<string> explode(string separador, string frase) {      // explode --- > função global
+
   int prox = separador.size();                                // separador.tamanho- > 
+
   vector<string> ret;
+
   string::size_type ini, fim;                                 // tamnaho tipo
+
   ini = fim = 0;
+
   string t; // var obs!!
+  string t1; //obs!!
 
   while (true) {
+
     fim = frase.find(separador, ini);                           // encontrar
+
     if (fim == string::npos) {
+
       t = frase.substr(ini, frase.size() - ini);
-      if (t.size() > 0)
+
+      if (t.size() > 0){
+
         ret.push_back(t);                                       // pusch_alimenta o vetor 
+      }
+
       break;
+
     }
-    t = frase.substr(ini, fim - ini);                           // obs!!
-    if (t.size() > 0)
-      ret.push_back(t);                                          // empurrar
+
+    t = frase.substr(ini, fim - ini);   // t2                        // obs!!
+
+    if (t.size() > 0){
+
+      ret.push_back(t);  // t2                                        // empurrar
+    }
+
     ini = fim + prox;
+
   }
+
   return ret;
+
 }
 
 //Listar as rotas de rede do servidor usando o comando ‘route -n’. -------------------------------------
+
 int main(int argc,char *argv[]){
 
   vector<string> sep;
 
   FILE *arqTxt;
+
   arqTxt = popen("route -n","r");
 
   char textChar[1024];
+
   string texto;
-
-  //vetor
-
+  
   while (fgets(textChar,sizeof(textChar)-1,arqTxt)!=NULL){
+
     texto = textChar;
-    sep = explode(" " , texto);
-    
+
+    sep = explode(" " , texto); // obs
+
     for (int i = 0; i < sep.size(); i++){
+
       cout << sep[i] << endl;
+
     } 
+
   }
 
   return 0;
+
 }
 
+// Codigo 2 -------------------------------------------- abaixo
 
 
+//Função para quebrar texto
 
-
-
-/*
-
-
-
-/Função para quebrar texto
 vector<string> explode(string separador, string frase) {
+
 int prox = separador.size();
+
 vector<string> ret;
+
 string::size_type ini, fim;
+
 ini = fim = 0;
+
 string aux = frase.substr(ini, frase.size() - ini);
+
 string aux2 = frase.substr(ini, fim - ini);
+
 while (true) {
+
 fim = frase.find(separador, ini);
+
 if (fim == string::npos) {
+
 if(aux.size()>0)ret.push_back(aux);
+
 break;
+
 }
-if(aux2.size()>0)ret.push_back(aux2);
+
+if(aux2.size()>0)ret.push_back(aux2); // t2
+
 ini = fim + prox;
+
 }
+
 return ret;
+
 }
+
+
+
 
 
 int main(int argc, char *argv[]){
+
 //Cria ponteiro de texto.
+
 FILE *arqTxt;
+
 //Salva o resultado do comando em terminal no ponteiro.
+
 arqTxt = popen("route -n", "r");
 
+
+
 //Cria linha de armazenamento temporario e final para o loop.
+
 char textChar[1024];
+
 string texto;
 
+
+
 //Salva o texto do terminal em String.
+
 while (fgets(textChar, sizeof(textChar)-1, arqTxt)!=NULL){
+
 texto = textChar;
-vector<string> sep = explode (" ", texto);
-for(int i = 0; i<sep.size(); i++){
+
+vector<string> sep = explode (" ", texto);// obs
+
+for(int i = 0; i < sep.size(); i++){
+
 //cout << sep[2]; //FILTRAR!!!, colocar a coluna
+
 cout << sep[i] << endl;
+
 }
+
 cout << "Fim da linha" << endl;
+
 }
+
+
 
 //Explode o texto extraido.
 
 
 
 
+
+
+
+
+
 return 0;
+
 }
 
 
 
 
--------
+
+
 
 ------------------------------------------------------
 7 - 
