@@ -157,6 +157,25 @@ leia sobre argc e argv.
 
 Testar se um determinado diretório existe passando o nome do diretório por parâmetro em linha de comando, 
 informar na saída do programa ‘Diretório xxx existe’ ou ‘Diretório xxx não existe’.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+
+using namespace std;
+
+int main(int argc, char *argv[]) {
+FILE *fa;
+// Abrindo arquivo 
+fa = fopen(argv[1],"r");
+// verificar se arquivo existe 
+if (fa == NULL){
+  cout << "O diretorio " << argv[1] << " não existe " << endl;
+  exit(0);
+}else{
+  cout << "O diretorio " << argv[1] << " não  existe " << endl;
+}
+}
 -----------------------------------------------------------------
 5 - Ler um arquivo e imprimir o conteúdo em tela
 
@@ -192,6 +211,21 @@ vector<string> explode(string separador, string frase) {
   }
   return ret;
 }
+
+------------------------------------------------------
+7 - 
+Listar informações de usuário, código e grupo dos usuários do linux
+
+Com base nas informações do arquivo ‘/etc/passwd’, pegar o código do grupo de cada usuário e busca-lo no arquivo ‘/etc/group’.
+O resultado deve ser escrito no arquivo ‘/home/exercicio/resultado.txt’ no formato ‘usuario -> codigo -> grupo’.
+
+Observação:
+Não utilizar os comandos do linux para trazer as informações.
+A ideia é abrir os arquivos mencionados utilizando fstream e buscar pelas informações manualmente.
+-----------------------
+8 - Listar as informações de usuário, código e grupo armazenados no arquivo /home/exercicio/resultado.txt em formato JSON
+
+Abrir o arquivo ‘/home/exercicio/resultado.txt’ e mostrar na tela o resultado em formato JSON
 
 
 
