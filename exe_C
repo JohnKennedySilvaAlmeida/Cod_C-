@@ -212,6 +212,138 @@ vector<string> explode(string separador, string frase) {
   return ret;
 }
 
+
+------
+
+/*Listar determinadas informações referentes as rotas de rede
+Listar as rotas de rede do servidor usando o comando ‘route -n’. 
+Deverá mostrar como resultado na tela somente os seguintes campos: Destino, Máscara e Interface.
+
+Dica: 
+leia sobre o find e string::npos e substr e popen.*/
+#include <fstream>
+#include <vector>
+
+#include<stdio.h>
+
+#include <iostream>
+#include <map>
+#include <iterator>
+
+using namespace std;
+
+vector<string> explode(string separador, string frase) {      // explode 
+  int prox = separador.size();                                // separador.tamanho- > 
+  vector<string> ret;
+  string::size_type ini, fim;                                 // tamnaho tipo
+  ini = fim = 0;
+  string t; // var obs!!
+
+  while (true) {
+    fim = frase.find(separador, ini);                           // encontrar
+    if (fim == string::npos) {
+      t = frase.substr(ini, frase.size() - ini);
+      if (t.size() > 0)
+        ret.push_back(t);                                       // pusch_alimenta o vetor 
+      break;
+    }
+    t = frase.substr(ini, fim - ini);                           // obs!!
+    if (t.size() > 0)
+      ret.push_back(t);                                          // empurrar
+    ini = fim + prox;
+  }
+  return ret;
+}
+
+//Listar as rotas de rede do servidor usando o comando ‘route -n’. -------------------------------------
+int main(int argc,char *argv[]){
+
+  vector<string> sep;
+
+  FILE *arqTxt;
+  arqTxt = popen("route -n","r");
+
+  char textChar[1024];
+  string texto;
+
+  //vetor
+
+  while (fgets(textChar,sizeof(textChar)-1,arqTxt)!=NULL){
+    texto = textChar;
+    sep = explode(" " , texto);
+    
+    for (int i = 0; i < sep.size(); i++){
+      cout << sep[i] << endl;
+    } 
+  }
+
+  return 0;
+}
+
+
+
+
+
+
+/*
+
+
+
+/Função para quebrar texto
+vector<string> explode(string separador, string frase) {
+int prox = separador.size();
+vector<string> ret;
+string::size_type ini, fim;
+ini = fim = 0;
+string aux = frase.substr(ini, frase.size() - ini);
+string aux2 = frase.substr(ini, fim - ini);
+while (true) {
+fim = frase.find(separador, ini);
+if (fim == string::npos) {
+if(aux.size()>0)ret.push_back(aux);
+break;
+}
+if(aux2.size()>0)ret.push_back(aux2);
+ini = fim + prox;
+}
+return ret;
+}
+
+
+int main(int argc, char *argv[]){
+//Cria ponteiro de texto.
+FILE *arqTxt;
+//Salva o resultado do comando em terminal no ponteiro.
+arqTxt = popen("route -n", "r");
+
+//Cria linha de armazenamento temporario e final para o loop.
+char textChar[1024];
+string texto;
+
+//Salva o texto do terminal em String.
+while (fgets(textChar, sizeof(textChar)-1, arqTxt)!=NULL){
+texto = textChar;
+vector<string> sep = explode (" ", texto);
+for(int i = 0; i<sep.size(); i++){
+//cout << sep[2]; //FILTRAR!!!, colocar a coluna
+cout << sep[i] << endl;
+}
+cout << "Fim da linha" << endl;
+}
+
+//Explode o texto extraido.
+
+
+
+
+return 0;
+}
+
+
+
+
+-------
+
 ------------------------------------------------------
 7 - 
 Listar informações de usuário, código e grupo dos usuários do linux
