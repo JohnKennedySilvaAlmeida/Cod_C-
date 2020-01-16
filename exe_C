@@ -12,7 +12,7 @@ int main () {
     myfile << "teste\n";
     myfile << "1teste\n";
     myfile << "brasil\n";
-    myfile << "america\n";
+    myfile << "america\n";                         //ok ----- versao melhor
     myfile << "john\n";
     myfile << "tete\n";
     myfile << "2_teste\n";
@@ -41,7 +41,7 @@ int main(){
   novo=fopen("novo.txt","w");
   velho=fopen("exercicio.txt","r");
     
-  if (novo==NULL || velho==NULL){                  //OBS!!! melhorar    >> c !! c++
+  if (novo==NULL || velho==NULL){                  //OBS!!! melhorar    >> c !! c++ ---  funciona
     printf("Erro de abertura\n");
     system("pause");
     exit(1);
@@ -53,6 +53,27 @@ int main(){
   }
   fclose(velho);
   fclose(novo);
+  return 0;
+}
+------------------------------- obs pega ultima linha d arquivo ----
+#include <string>
+using namespace std;
+
+int main () {
+  string line;
+  ifstream myfile ("exercicio.txt");                     // ok ----
+  if (myfile.is_open())
+  {
+    while (! myfile.eof() )
+    {
+      getline (myfile,line);
+      cout << line << endl;
+    }
+    myfile.close();
+  }
+
+  else cout << "ficheiro não encontrado.."; 
+
   return 0;
 }
 
@@ -70,7 +91,7 @@ int main(){
   ifstream arquivoLeitura;
   arquivoLeitura.open("novo.txt");
     
-  string palavraAtual;
+  string palavraAtual;                               // funciona - a melhorar ---------
   string textoParaGravar;
     
   while (arquivoLeitura.good()) {
@@ -85,13 +106,49 @@ int main(){
   arquivoLeitura.close();
   return 0;
 }
+----------------------------- P3 ------------------------------
+#include <fstream>
+#include <string>
+
+int main()
+{
+    auto input = std::ifstream("exercicio.txt");
+    auto output = std::ofstream("novo.txt");
+                                                          // ok - versao melhor 
+    std::string msg;
+    while (std::getline(input, msg))
+    {
+        if ( msg.find("teste") != std::string::npos )
+            continue;
+        output << msg << std::endl;
+    }
+}
 
 
 -------------------------falta-----------------------------------
 
 3 - Verificar se determinado arquivo existe
 
-Testar se um determinado arquivo existe, passando o nome do arquivo por parâmetro em linha de comando, informar na saída do programa ‘Arquivo xxx existe’ ou ‘Arquivo xxx não existe’.
+Testar se um determinado arquivo existe, passando o nome do arquivo por parâmetro em linha de comando, informar na saída do programa
+‘Arquivo xxx existe’ ou ‘Arquivo xxx não existe’.
+
+#include <fstream>
+#include <string>
+
+int main(int argc,char *argv[]){
+ 
+FILE *fp;
+
+fp=fopen("nov0o.txt","r");                             // ok  - so por nome do arquivo - conctenar ---------------------------------
+
+if(fp){
+    printf("Arquivo existe!!\n");
+    fclose(fp);
+}else{
+    printf("Arquivo Não exite.?");
+}
+return(0);
+}
 
 Dica: 
 leia sobre argc e argv.
