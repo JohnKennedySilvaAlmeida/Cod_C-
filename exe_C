@@ -384,6 +384,89 @@ O resultado deve ser escrito no arquivo ‘/home/exercicio/resultado.txt’ no f
 Observação:
 Não utilizar os comandos do linux para trazer as informações.
 A ideia é abrir os arquivos mencionados utilizando fstream e buscar pelas informações manualmente.
+
+#include <fstream>
+#include <vector>
+#include<stdio.h>                           
+#include <iostream>
+#include <map>
+#include <iterator>
+
+using namespace std;
+
+vector<string> explode(string separador, string frase) {      // explode --- > função - global -----------****************
+
+  int prox = separador.size();                                // separador.tamanho- > 
+  vector<string> ret;                                         // vetor 
+  string::size_type ini, fim;                                 // tamnaho tipo
+
+  ini = fim = 0;
+  string t;               // var obs!!
+
+  while (true) {         // looop 
+
+    fim = frase.find(separador, ini);                           // encontrar
+    if (fim == string::npos) {                                 // classe
+      t = frase.substr(ini, frase.size() - ini);               // size.tamanho
+      if (t.size() > 0){
+        ret.push_back(t);                                       // pusch_alimenta o vetor 
+      }
+      break;
+    }
+    t = frase.substr(ini, fim - ini);   
+    if (t.size() > 0){                               // .tamanho
+      ret.push_back(t);                              // empurrar
+    }
+    ini = fim + prox;   // ++ soma  
+  }
+  return ret;
+}
+
+int main(){      // main -------------------------------------------------------------------------------------
+
+  fstream arqTxt; 
+  fstream arqTxt1;
+  fstream arqTxt2;                                                     // vars !! 
+  string textoGravado;
+  string subString;
+  
+  arqTxt.open("/etc/passwd", fstream::in);                         // abrir arquivo  in - dentro- leitura
+  arqTxt1.open("/etc/group", fstream::in);                        // abrir arquivo  in - dentro - leitura
+  arqTxt2.open("resultado.txt", fstream::out);         // criar arquivo  in - dentro , out - fora   // ios - app acrescenta conteudo ++ no txt  
+
+  vector<string> sep;                     // vetor --- obsss!!!
+  vector<string> sep1; 
+
+  while (arqTxt.good()){    // vai ate fim do arquivo 
+  //while (!arqTxt.eof()){              //EOF => É uma definição macro do tipo int que se expande para uma expressão constante integral negativa(geralmente -1).
+    getline(arqTxt, textoGravado);     // pegar linha 
+
+   //subString = textoGravado.substr(textoGravado.find(":x:")+ 3 );   // find - encontrar ":x;"
+
+   //std::cout << subString << std::endl;
+  
+    sep = explode(":",textoGravado);          // função 
+    cout  << sep[0],"/n"; // obs!!!
+    
+    //for(int i = 0; i < sep.size(); i++){       // obs!!!!!
+      //arqTxt1 << arqTxt;
+      //arqTxt2 << arqTxt1;
+    //}
+    //cout  << sep[0]; // obs!!!
+    //cout  << endl;
+
+    sep.clear();         // claro
+    cout << endl;        // pular linha 
+  }
+
+  arqTxt.close();
+  arqTxt1.close();
+  arqTxt2.close();       // fechar arquivos 
+
+  return 0;
+
+}
+
 -----------------------------------------------------------------------------------------------------------
 8 - Listar as informações de usuário, código e grupo armazenados no arquivo /home/exercicio/resultado.txt em formato JSON
 
