@@ -368,26 +368,9 @@ cout << "Fim da linha" << endl;
 
 
 
-
-
-
-
-Listar informações de usuário, código e grupo dos usuários do linux
-
-Com base nas informações do arquivo ‘/etc/passwd’, pegar o código do grupo de cada usuário e busca-lo no arquivo ‘/etc/group’.
-O resultado deve ser escrito no arquivo ‘/home/exercicio/resultado.txt’ no formato ‘usuario -> codigo -> grupo’.
-
-Observação:
-Não utilizar os comandos do linux para trazer as informações.
-A ideia é abrir os arquivos mencionados utilizando fstream e buscar pelas informações manualmente.
-
 return 0;
 
 }
-
-
-
-
 
 
 
