@@ -467,6 +467,61 @@ int main(){      // main -------------------------------------------------------
 
 }
 
+--------------------------- outra versão ------------------------------
+
+#include <fstream>
+#include <vector>
+#include<stdio.h>                           
+#include <iostream>
+#include <map>
+#include <iterator>
+
+using namespace std;
+
+int main(){
+
+	fstream arqTxt;
+	fstream arqTxtResult;
+	fstream arqTxtGroup;
+	fstream arqTxtGravado;
+	fstream codGrupo;
+	fstream conteudoGroup;
+
+	fopen("resultado.txt", "a");
+
+	arqTxt.open("/etc/passwd", fstream::in);
+
+	while (!arqTxt.eof()){
+		
+		getline(arqTxt,codGrupo);
+		
+		if(!codGrupo.empty(){
+			codGrupo = codGrupo.substr(codGrupo.find(":x:")+ 3);
+			codGrupo = codGrupo.substr(0, codGrupo.find(":"));
+		}
+		
+		arqTxt.open("/etc/group", fstream::in);
+		
+		while (!arqTxtGroup.eof()){
+			
+			getline(arqTxtGroup,conteudoGroup);
+			
+			if(conteudoGroup.empty()){
+				conteudoGroup = conteudoGroup.substr(conteudoGroup.find(":x:")+ 3);
+				conteudoGroup = conteudoGroup.substr(0, conteudoGroup.find(":"));
+			}
+			if(conteudoGroup == codGrupo){
+				arqTxtResult.open("resultado.txt", fstream::in |fstream::out |fstream::ate);
+				arqTxtResult << "Usuario : " << " Codigo : " << conteudoGroup << "Grupo : " << endl;
+				arqTxtResult .close();
+			}
+			
+		}
+		arqTxtGroup.close();
+	}
+	return 0;
+}
+
 -----------------------------------------------------------------------------------------------------------
 8 - Listar as informações de usuário, código e grupo armazenados no arquivo /home/exercicio/resultado.txt em formato JSON
 
