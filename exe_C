@@ -521,6 +521,77 @@ int main(){
 	}
 	return 0;
 }
+------------------------ outra versão ----------------
+#include <iostream>
+#include <istream>
+#include <fstream>
+#include <string>
+#include <vector>
+using namespace std;
+
+vector<string> explode(string separador, string frase) {
+  int prox = separador.size();
+  vector<string> ret;
+  string::size_type ini, fim;
+  ini = fim = 0;
+  string aux;
+  while (true){
+    fim = frase.find(separador, ini);
+    if (fim == string::npos){
+      aux = frase.substr(ini, frase.size() - ini);
+      if(aux.size()>0)ret.push_back(aux);
+      break;
+    }
+    aux= frase.substr(ini, fim - ini); 
+    if(aux.size()>0)ret.push_back(aux);
+    ini = fim + prox;
+  }
+  return ret;
+}
+
+int main (int argc, char *argv[]){
+  //Declarando arquivos usados.
+  fstream arqEntrada;
+  fstream arqSaida;
+  fstream arqComparador;
+
+  //Abrindo arquivos.
+  arqEntrada.open("/etc/passwd", ios_base::in);
+  arqSaida.open("resultado.txt", ios_base::out); 
+  arqComparador.open("/etc/group", ios_base::in);
+
+  //STRINGS E VETORES USADOS
+  string usuario;
+  string codigo;
+  string grupo;
+  string txtRecebido;
+  string txtTotal;
+  vector<string> sep;
+  vector<string> sepInt;
+
+  //Marcar texto para Explode
+  while(arqEntrada.good()){
+    getline(arqEntrada, txtRecebido);
+    txtTotal+=txtRecebido+"!!!!!"; //Salva o texto
+  }  
+  
+  //Fazer explode externo, e usar loop interno para pegar os dados desejados.
+  sep = explode("!!!!!", txtTotal);
+  for(int i=0; i<sep.size(); i++){
+    sepInt = explode(":", sep[i]);
+    for(int j=0; j<sepInt.size(); j++){
+      if(j==0) cout<<sepInt[j]<<endl;
+      if(j==2) cout<<sepInt[j]<<endl;
+    }
+  }
+  sep.clear();
+  sepInt.clear();
+  arqComparador.close();
+  arqEntrada.close();
+  arqSaida.close();
+  return 0;
+}
+
 
 -----------------------------------------------------------------------------------------------------------
 8 - Listar as informações de usuário, código e grupo armazenados no arquivo /home/exercicio/resultado.txt em formato JSON
